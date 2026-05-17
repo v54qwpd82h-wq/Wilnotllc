@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mr. Wilnot House Cleaning LLC</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        :root { --dark-blue: #051B4F; --primary-blue: #0A369D; --light-blue: #1E90FF; --green-accent: #28a745; --white: #ffffff; --gray: #f4f4f9; }
+        body { background-color: var(--gray); color: #333; }
+        .hidden { display: none !important; }
+        
+        /* LANGUAGE SELECTOR SCREEN */
+        .lang-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, var(--dark-blue), var(--primary-blue)); display: flex; justify-content: center; align-items: center; z-index: 9999; color: var(--white); text-align: center; }
+        .lang-box { background: rgba(255, 255, 255, 0.1); padding: 40px; border-radius: 15px; border: 1px solid rgba(255, 255, 255, 0.2); max-width: 500px; width: 90%; }
+        .lang-buttons { display: flex; flex-direction: column; gap: 15px; margin-top: 20px; }
+        .lang-buttons button { padding: 15px; font-size: 1.2rem; font-weight: bold; border: none; border-radius: 8px; cursor: pointer; background-color: var(--green-accent); color: var(--white); transition: 0.2s; }
+        
+        /* HEADER */
+        header { background-color: var(--dark-blue); color: var(--white); padding: 20px 5%; display: flex; justify-content: space-between; align-items: center; border-bottom: 4px solid var(--green-accent); }
+        .logo-area p { color: var(--light-blue); font-weight: bold; letter-spacing: 2px; }
+        .header-controls { display: flex; align-items: center; gap: 15px; }
+        .lang-selector-top select { padding: 8px 15px; border-radius: 5px; font-weight: bold; cursor: pointer; }
+        .btn-policy-nav { background-color: transparent; border: 2px solid var(--green-accent); color: var(--white); padding: 8px 15px; border-radius: 5px; font-weight: bold; cursor: pointer; transition: 0.2s; }
+        .btn-policy-nav:hover { background-color: var(--green-accent); }
+
+        /* HERO SECTION */
+        .hero { background: linear-gradient(rgba(10, 54, 157, 0.8), rgba(5, 27, 79, 0.9)), url('https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=1200&q=80') no-repeat center center/cover; height: 50vh; display: flex; justify-content: center; align-items: center; text-align: center; color: var(--white); padding: 20px; }
+        .hero h2 { font-size: 2.5rem; margin-bottom: 15px; }
+        .btn-whatsapp { background-color: var(--green-accent); color: var(--white); padding: 15px 35px; font-size: 1.2rem; font-weight: bold; text-decoration: none; border-radius: 50px; display: inline-flex; align-items: center; gap: 10px; margin-top: 20px; box-shadow: 0 4px 15px rgba(40, 167, 69, 0.4); }
+        
+        /* SECTIONS */
+        .section-title { text-align: center; font-size: 2rem; margin: 40px 0 20px 0; color: var(--dark-blue); }
+        .services-grid, .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; padding: 0 5%; }
+        .service-card, .feature { background: var(--white); padding: 25px; border-radius: 10px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        .service-card { border-top: 5px solid var(--primary-blue); }
+        .service-icon, .feature i { font-size: 2.5rem; color: var(--primary-blue); margin-bottom: 15px; }
+        .feature i { color: var(--green-accent); }
+        
+        /* POLICY SYSTEM (MODAL BOX) */
+        .policy-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); display: flex; justify-content: center; align-items: center; z-index: 10000; padding: 20px; }
+        .policy-content { background: var(--white); padding: 30px; border-radius: 12px; max-width: 650px; width: 100%; max-height: 85vh; overflow-y: auto; box-shadow: 0 5px 25px rgba(0,0,0,0.3); position: relative; }
+        .policy-content h2 { color: var(--dark-blue); margin-bottom: 10px; font-size: 1.8rem; border-bottom: 2px solid var(--green-accent); padding-bottom: 10px; }
+        .policy-content p { font-style: italic; margin-bottom: 20px; color: #555; line-height: 1.5; }
+        .policy-list { list-style: none; display: flex; flex-direction: column; gap: 12px; text-align: left; }
+        .policy-list li { padding: 10px; background: #eef4ff; border-left: 4px solid var(--primary-blue); border-radius: 0 6px 6px 0; line-height: 1.4; font-size: 0.95rem; }
+        .btn-close-policy { background-color: var(--dark-blue); color: var(--white); border: none; padding: 12px 25px; font-size: 1rem; font-weight: bold; border-radius: 6px; cursor: pointer; margin-top: 25px; width: 100%; transition: 0.2s; }
+        .btn-close-policy:hover { background-color: var(--green-accent); }
+
+        /* FOOTER */
+        footer { background-color: var(--dark-blue); color: var(--white); text-align: center; padding: 40px 20px; margin-top: 40px; }
+        .phone-num { font-size: 2rem; font-weight: bold; color: var(--green-accent); margin: 15px 0; }
+        .badges { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
+        .badges span { background: rgba(255,255,255,0.1); padding: 5px 12px; border-radius: 15px; font-size: 0.8rem; }
+        .social-media a { color: var(--white); font-size: 1.5rem; margin: 0 10px; }
+    </style>
+</head>
+<body>
+
+    <div id="language-screen" class="lang-overlay">
+        <div class="lang-box">
+            <h2>Welcome / Bienvenidos</h2>
+            <p>Choose a language / Elige un idioma</p>
+            <div class="lang-buttons">
+                <button onclick="selectLanguage('en')">English</button>
+                <button onclick="selectLanguage('es')">Español</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="main-site" class="hidden">
+        <header>
+            <div class="logo-area">
+                <h1>Mr. Wilnot</h1>
+                <p>HOUSE CLEANING LLC</p>
+            </div>
+            <div class="header-controls">
+                <button id="nav-policy-btn" class="btn-policy-nav" onclick="togglePolicy(true)">Our Policy</button>
+                <div class="lang-selector-top">
+                    <select id="top-lang-select" onchange="selectLanguage(this.value)">
+                        <option value="en">English</option>
+                        <option value="es">Español</option>
+                    </select>
+                </div>
+            </div>
+        </header>
+
+        <section class="hero">
+            <div>
+                <h2 id="hero-title">Clean Home. Peaceful Mind. Better Life!</h2>
+                <p id="hero-sub">Proudly serving Florida and all other states!</p>
+                <a href="#" id="whatsapp-btn-main" class="btn-whatsapp" target="_blank">
+                    <i class="fab fa-whatsapp"></i> <span id="btn-text-1">Book a Service</span>
+                </a>
+            </div>
+        </section>
+
+        <h2 id="title-services" class="section-title">Our Services</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <i class="fas fa-home service-icon"></i>
+                <h3 id="srv-title-1">Residential Cleaning</h3>
+                <p id="srv-desc-1">Cleaning homes, apartments, condos, Airbnb, and more.</p>
+            </div>
+            <div class="service-card">
+                <i class="fas fa-building service-icon"></i>
+                <h3 id="srv-title-2">Commercial Cleaning</h3>
+                <p id="srv-desc-2">Offices, stores, restaurants, clinics, schools, and more.</p>
+            </div>
+            <div class="service-card">
+                <i class="fas fa-broom service-icon"></i>
+                <h3 id="srv-title-3">Deep Cleaning</h3>
+                <p id="srv-desc-3">Detailed cleaning for places that need extra care.</p>
+            </div>
+            <div class="service-card">
+                <i class="fas fa-box-open service-icon"></i>
+                <h3 id="srv-title-4">Move In / Move Out</h3>
+                <p id="srv-desc-4">We prepare your home before you move in or after you move out.</p>
+            </div>
+        </div>
+
+        <h2 id="title-why" class="section-title">Why Choose Us?</h2>
+        <div class="features-grid">
+            <div class="feature"><i class="fas fa-thumbs-up"></i><h4 id="f-title-1">Quality Service</h4><p id="f-desc-1">Professional work every time.</p></div>
+            <div class="feature"><i class="fas fa-shield-alt"></i><h4 id="f-title-2">Reliable & Trustworthy</h4><p id="f-desc-2">You can count on us without worry.</p></div>
+            <div class="feature"><i class="fas fa-calendar-alt"></i><h4 id="f-title-3">Flexible & On-Time</h4><p id="f-desc-3">We work around your schedule.</p></div>
+        </div>
+
+        <footer>
+            <p id="footer-serve">Wherever you are, we are here for you!</p>
+            <h3 id="footer-contact-title">CONTACT US TODAY!</h3>
+            <p class="phone-num"><i class="fas fa-phone-alt"></i> 239-350-8368</p>
+            <div class="badges">
+                <span id="badge-1">Quality Cleaning</span><span id="badge-2">Affordable Prices</span><span id="badge-3">Professional Service</span>
+            </div>
+            <div class="social-media">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-tiktok"></i></a>
+            </div>
+        </footer>
+    </div>
+
+    <div id="policy-modal" class="policy-modal hidden">
+        <div class="policy-content">
+            <h2 id="policy-heading">SERVICE POLICY</h2>
+            <p id="policy-mission">At Mr. Wilnot House Cleaning LLC, our mission is to provide clean, safe, and professional cleaning services with respect, honesty, and quality.</p>
+            <ul class="policy-list">
+                <li id="p1">1. Customers must schedule cleaning appointments in advance.</li>
+                <li id="p2">2. Any cancellation or rescheduling should be made at least 24 hours before the appointment.</li>
+                <li id="p3">3. Customers must provide access to the home, office, or property at the scheduled time.</li>
+                <li id="p4">4. We are not responsible for items that are not properly secured before cleaning.</li>
+                <li id="p5">5. For safety reasons, dangerous chemicals, weapons, or hazardous materials must be removed before service.</li>
+                <li id="p6">6. Payment must be made as agreed before or after the service.</li>
+                <li id="p7">7. Extra services may require an additional fee.</li>
+                <li id="p8">8. Our team respects your home, privacy, and personal belongings.</li>
+                <li id="p9">9. We reserve the right to refuse service if the environment is unsafe.</li>
+                <li id="p10">10. Customer satisfaction is important to us. Please contact us if there is any concern after service.</li>
+            </ul>
+            <button id="policy-close-btn" class="btn-close-policy" onclick="togglePolicy(false)">Close / Cerrar</button>
+        </div>
+    </div>
+
+    <script>
+        const translations = {
+            en: {
+                navPolicy: "Service Policy",
+                heroTitle: "Clean Home. Peaceful Mind. Better Life!", heroSub: "Proudly serving Florida and all other states!", btnText: "Book via WhatsApp", titleServices: "Our Services", titleWhy: "Why Choose Us?",
+                srv1T: "Residential Cleaning", srv1D: "Cleaning homes, apartments, condos, Airbnb, and more.",
+                srv2T: "Commercial Cleaning", srv2D: "Offices, stores, restaurants, clinics, schools, and more.",
+                srv3T: "Deep Cleaning", srv3D: "Detailed cleaning for places that need extra care.",
+                srv4T: "Move In / Move Out", srv4D: "We prepare your home before you move in or after you move out.",
+                f1T: "Quality Service", f1D: "Professional work every time.", f2T: "Reliable & Trustworthy", f2D: "You can count on us without worry.", f3T: "Flexible & On-Time", f3D: "We work around your schedule.",
+                footerServe: "Wherever you are, we are here for you!", footerContact: "CONTACT US TODAY!",
+                badge1: "Quality Cleaning", badge2: "Affordable Prices", badge3: "Professional Service",
+                waMessage: "Hello Mr. Wilnot, I want to book a cleaning service.",
+                
+                // Policy Translations (English)
+                policyHead: "SERVICE POLICY",
+                policyMiss: "At Mr. Wilnot House Cleaning LLC, our mission is to provide clean, safe, and professional cleaning services with respect, honesty, and quality.",
+                p1: "1. Customers must schedule cleaning appointments in advance.",
+                p2: "2. Any cancellation or rescheduling should be made at least 24 hours before the appointment.",
+                p3: "3. Customers must provide access to the home, office, or property at the scheduled time.",
+                p4: "4. We are not responsible for items that are not properly secured before cleaning.",
+                p5: "5. For safety reasons, dangerous chemicals, weapons, or hazardous materials must be removed before service.",
+                p6: "6. Payment must be made as agreed before or after the service.",
+                p7: "7. Extra services may require an additional fee.",
+                p8: "8. Our team respects your home, privacy, and personal belongings.",
+                p9: "9. We reserve the right to refuse service if the environment is unsafe.",
+                p10: "10. Customer satisfaction is important to us. Please contact us if there is any concern after service.",
+                closeBtn: "Close Policy"
+            },
+            es: {
+                navPolicy: "Política de Servicio",
+                heroTitle: "¡Casa Limpia. Mente Tranquila. Vida Mejor!", heroSub: "¡Sirviendo con orgullo a Florida y todos los demás estados!", btnText: "Reservar por WhatsApp", titleServices: "Nuestros Servicios", titleWhy: "¿Por Qué Elegirnos?",
+                srv1T: "Limpieza Residencial", srv1D: "Limpieza de casas, apartamentos, condominios, Airbnb y más.",
+                srv2T: "Limpieza Comercial", srv2D: "Oficinas, tiendas, restaurantes, clínicas, escuelas y más.",
+                srv3T: "Limpieza Profunda", srv3D: "Limpieza detallada para lugares que necesitan un cuidado extra.",
+                srv4T: "Mudanza (In / Out)", srv4D: "Preparamos su hogar antes de mudarse o después de salir.",
+                f1T: "Servicio de Calidad", f1D: "Trabajo profesional en cada ocasión.", f2T: "Confiable y Seguro", f2D: "Puede contar con nosotros sin preocuparse.", f3T: "Flexible y A Tiempo", f3D: "Trabajamos según su horario.",
+                footerServe: "¡Dondequiera que esté, estamos aquí para usted!", footerContact: "¡CONTÁCTENOS HOY!",
+                badge1: "Limpieza de Calidad", badge2: "Precios Accesibles", badge3: "Servicio Profesional",
+                waMessage: "Hola Sr. Wilnot, deseo reservar un servicio de limpieza.",
+                
+                // Policy Translations (Spanish)
+                policyHead: "POLÍTICA DE SERVICIO",
+                policyMiss: "En Mr. Wilnot House Cleaning LLC, nuestra misión es brindar servicios de limpieza limpios, seguros y profesionales con respeto, honestidad y calidad.",
+                p1: "1. Los clientes deben programar las citas de limpieza con anticipación.",
+                p2: "2. Cualquier cancelación o reprogramación debe realizarse al menos 24 horas antes de la cita.",
+                p3: "3. Los clientes deben proporcionar acceso a la casa, oficina o propiedad a la hora programada.",
+                p4: "4. No nos hacemos responsables de los objetos que no estén debidamente asegurados antes de la limpieza.",
+                p5: "5. Por razones de seguridad, los productos químicos peligrosos, las armas o los materiales de riesgo deben retirarse antes del servicio.",
+                p6: "6. El pago debe realizarse según lo acordado antes o después del servicio.",
+                p7: "7. Los servicios adicionales pueden requerir un costo adicional.",
+                p8: "8. Nuestro equipo respeta su hogar, privacidad y pertenencias personales.",
+                p9: "9. Nos reservamos el derecho de rechazar el servicio si el entorno no es seguro.",
+                p10: "10. La satisfacción del cliente es importante para nosotros. Por favor, contáctenos si tiene alguna inquietud después del servicio.",
+                closeBtn: "Cerrar Política"
+            }
+        };
+
+        function selectLanguage(lang) {
+            document.getElementById('language-screen').classList.add('hidden');
+            document.getElementById('main-site').classList.remove('hidden');
+            document.getElementById('top-lang-select').value = lang;
+            const t = translations[lang];
+            
+            // Site content updating
+            document.getElementById('nav-policy-btn').innerText = t.navPolicy;
+            document.getElementById('hero-title').innerText = t.heroTitle;
+            document.getElementById('hero-sub').innerText = t.heroSub;
+            document.getElementById('btn-text-1').innerText = t.btnText;
+            document.getElementById('title-services').innerText = t.titleServices;
+            document.getElementById('title-why').innerText = t.titleWhy;
+            document.getElementById('srv-title-1').innerText = t.srv1T;
+            document.getElementById('srv-desc-1').innerText = t.srv1D;
+            document.getElementById('srv-title-2').innerText = t.srv2T;
+            document.getElementById('srv-desc-2').innerText = t.srv2D;
+            document.getElementById('srv-title-3').innerText = t.srv3T;
+            document.getElementById('srv-desc-3').innerText = t.srv3D;
+            document.getElementById('srv-title-4').innerText = t.srv4T;
+            document.getElementById('srv-desc-4').innerText = t.srv4D;
+            document.getElementById('f-title-1').innerText = t.f1T;
+            document.getElementById('f-desc-1').innerText = t.f1D;
+            document.getElementById('f-title-2').innerText = t.f2T;
+            document.getElementById('f-desc-2').innerText = t.f2D;
+            document.getElementById('f-title-3').innerText = t.f3T;
+            document.getElementById('f-desc-3').innerText = t.f3D;
+            document.getElementById('footer-serve').innerText = t.footerServe;
+            document.getElementById('footer-contact-title').innerText = t.footerContact;
+            document.getElementById('badge-1').innerText = t.badge1;
+            document.getElementById('badge-2').innerText = t.badge2;
+            document.getElementById('badge-3').innerText = t.badge3;
+
+            // Policy modal text updating
+            document.getElementById('policy-heading').innerText = t.policyHead;
+            document.getElementById('policy-mission').innerText = t.policyMiss;
+            document.getElementById('p1').innerText = t.p1;
+            document.getElementById('p2').innerText = t.p2;
+            document.getElementById('p3').innerText = t.p3;
+            document.getElementById('p4').innerText = t.p4;
+            document.getElementById('p5').innerText = t.p5;
+            document.getElementById('p6').innerText = t.p6;
+            document.getElementById('p7').innerText = t.p7;
+            document.getElementById('p8').innerText = t.p8;
+            document.getElementById('p9').innerText = t.p9;
+            document.getElementById('p10').innerText = t.p10;
+            document.getElementById('policy-close-btn').innerText = t.closeBtn;
+
+            const phoneNumber = "12393508368"; 
+            document.getElementById('whatsapp-btn-main').href = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(t.waMessage)}`;
+        }
+
+        function togglePolicy(show) {
+            const modal = document.getElementById('policy-modal');
+            if (show) {
+                modal.classList.remove('hidden');
+            } else {
+                modal.classList.add('hidden');
+            }
+        }
+    </script>
+</body>
+</html>
